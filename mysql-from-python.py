@@ -16,7 +16,7 @@ try:
     # Run a query
     with connection.cursor() as cursor:
         cursor.execute(
-            "UPDATE Friends SET age = %s where name = %s;", (23, 'Bob'))
+            "DELETE FROM Friends WHERE name in ['bob', 'jim'])
         connection.commit()
 finally:
     # Close the connection, regardless of whether the above was successful
