@@ -1,5 +1,7 @@
 import os
+import datetime
 import pymysql
+
 # Get username from workspace
 # (Modify this variable if running on another environment)
 username = os.getenv('GJSayers')
