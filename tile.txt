@@ -611,4 +611,107 @@ mysql> SELECT
 +-------------------------+---------------------+-------+
 10 rows in set (0.00 sec)
 
-mysql> 
+mysql> mysql> select sum(InvoiceLine.UnitPrice * InvoiceLine.Quantity), Track.Name as Track from InvoiceLine
+    -> join Track on InvoiceLine.TrackId = Track.TrackId
+    -> where Track.Name = "The Woman King";
++---------------------------------------------------+----------------+
+| sum(InvoiceLine.UnitPrice * InvoiceLine.Quantity) | Track          |
++---------------------------------------------------+----------------+
+|                                              3.98 | The Woman King |
++---------------------------------------------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> desc Track;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| TrackId      | int           | NO   | PRI | NULL    | auto_increment |
+| Name         | varchar(200)  | NO   |     | NULL    |                |
+| AlbumId      | int           | YES  | MUL | NULL    |                |
+| MediaTypeId  | int           | NO   | MUL | NULL    |                |
+| GenreId      | int           | YES  | MUL | NULL    |                |
+| Composer     | varchar(220)  | YES  |     | NULL    |                |
+| Milliseconds | int           | NO   |     | NULL    |                |
+| Bytes        | int           | YES  |     | NULL    |                |
+| UnitPrice    | decimal(10,2) | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> desc Artist;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| ArtistId | int          | NO   | PRI | NULL    | auto_increment |
+| Name     | varchar(120) | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select Artist.Name as Artist, Count(Track.TrackId) as Track from Artist
+    -> join Album on Artist.ArtistId = Album.ArtistId
+    -> join Track on Album.AlbumId = Track.AlbumId
+    -> group by Artist.Name
+    -> order by count(Artist.Name)
+    -> Desc Limit 5;
++--------------+-------+
+| Artist       | Track |
++--------------+-------+
+| Iron Maiden  |   213 |
+| U2           |   135 |
+| Led Zeppelin |   114 |
+| Metallica    |   112 |
+| Lost         |    92 |
++--------------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into MediaType (Name)
+    -> values ("Test Media Type 1");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into Album(Title, ArtistId)
+    -> values("Boy", 150);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    -> values ("Twighlight", 348, 2, 1, "U2", 210000, 1234, 0.99);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("An Cat Dubh", 348, 2, 1, "U2", 110000, 1234, 0.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("Into the Heart", 348, 2, 1, "U2", 200000, 1234, 0.99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("Out of Control", 348, 2, 1, "U2", 100000, 1234, 0.99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("Stories for Boys", 348, 2, 1, "U2", 150000, 1234, 0.99);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("The Ocean", 348, 2, 1, "U2", 175000, 1234, 0.99);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ("A Day Without Me", 348, 2, 1, "U2", 185000, 1234, 0.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> Insert into Track (Name, AlbumId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    ->             values("Extra Track", 348, 1, "U2", 290000, 1234, 0.99);
+ERROR 1364 (HY000): Field 'MediaTypeId' doesn't have a default value
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    -> values("Extra Track", 348, 1, "U2", 290000, 1234, 0.99);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    -> values("Extra Track", 348, 2, 1, "U2", 290000, 1234, 0.99);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> Insert into Track (Name, AlbumId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    -> values("Another Time, Another Place", 348, 2, 1, "U2", 258600, 1234, 0.99),
+    -> ("The Electric Co.", 348, 2, 1, "U2", 248600, 1234, 0.99),
+    -> ("Shadows and Tall Trees", 348, 2, 1, "U2", 312000, 1234, 0.99);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+    -> values("Another Time, Another Place", 348, 2, 1, "U2", 258600, 1234, 0.99),
+    -> ("The Electric Co.", 348, 2, 1, "U2", 248600, 1234, 0.99),
+    -> ("Shadows and Tall Trees", 348, 2, 1, "U2", 312000, 1234, 0.99);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
