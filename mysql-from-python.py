@@ -14,14 +14,10 @@ connection = pymysql.connect(host='localhost',
 
 try:
     # Run a query
-    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        sql = "select * from Artist;"
-        cursor.execute("""CREATE TABLE IF NOT EXISTS
-                        Friends(name char(20), age int, DOB datetime);""")
-        # Note that the above will still display a warning (not error) if the
-        # table already exists
-        for row in cursor:
-            print(row)
+    with connection.cursor() as cursor:
+        row = ("Bob", 21, "1990-02-06 23:04:56")
+        cursor.execute("INSERT INTO Friends values (%s, %s, %s);", row)
+        connection.commit()
 finally:
     # Close the connection, regardless of whether the above was successful
     connection.close()
