@@ -16,7 +16,10 @@ try:
     # Run a query
     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
         sql = "select * from Artist;"
-        cursor.execute(sql)
+        cursor.execute("""CREATE TABLE IF NOT EXISTS
+                        Friends(name char(20), age int, DOB datetime);""")
+        # Note that the above will still display a warning (not error) if the
+        # table already exists
         for row in cursor:
             print(row)
 finally:
