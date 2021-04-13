@@ -849,3 +849,76 @@ mysql> select * from Friends;
 +------+------+---------------------+
 6 rows in set (0.00 sec)
 
+mysql> select * from friends;
+ERROR 1146 (42S02): Table 'Chinook.friends' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_Chinook |
++-------------------+
+| Album             |
+| Artist            |
+| Customer          |
+| Employee          |
+| Friends           |
+| Genre             |
+| Invoice           |
+| InvoiceLine       |
+| MediaType         |
+| Playlist          |
+| PlaylistTrack     |
+| Track             |
++-------------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from Friends;
++------+------+---------------------+
+| name | age  | DOB                 |
++------+------+---------------------+
+| Bob  |   23 | 1990-02-06 23:04:56 |
+| Bob  |   23 | 1990-02-06 23:04:56 |
+| Bob  |   23 | 1990-02-06 23:04:56 |
+| Bob  |   23 | 1990-02-06 23:04:56 |
+| Jim  |   24 | 1955-05-09 13:12:45 |
+| Fred |   25 | 1911-09-12 01:01:01 |
++------+------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * in Friends
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in Friends' at line 1
+mysql> select * from Friends;
++------+------+---------------------+
+| name | age  | DOB                 |
++------+------+---------------------+
+| Jim  |   24 | 1955-05-09 13:12:45 |
+| Fred |   25 | 1911-09-12 01:01:01 |
++------+------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * from Friends;
++------+------+---------------------+
+| name | age  | DOB                 |
++------+------+---------------------+
+| Jim  |   24 | 1955-05-09 13:12:45 |
+| Fred |   25 | 1911-09-12 01:01:01 |
+| bob  |   21 | 1990-02-06 23:04:56 |
++------+------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Friends;
++------+------+---------------------+
+| name | age  | DOB                 |
++------+------+---------------------+
+| Jim  |   24 | 1955-05-09 13:12:45 |
+| Fred |   25 | 1911-09-12 01:01:01 |
++------+------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Friends;
++------+------+---------------------+
+| name | age  | DOB                 |
++------+------+---------------------+
+| Fred |   25 | 1911-09-12 01:01:01 |
++------+------+---------------------+
+1 row in set (0.00 sec)
+
